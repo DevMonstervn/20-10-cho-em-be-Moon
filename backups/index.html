@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#fff0f3">
+  <meta name="description" content="Món quà tương tác ngày Phụ nữ Việt Nam 20/10 dành riêng cho Moon 🌙">
+  
+  <title>Món quà 20/10 dành riêng cho Moon 🌙</title>
+  
+  <!-- Google Fonts: Quicksand & Dancing Script for warm romantic touch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background with floating particles/blossoms -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <div id="petals-container" class="petals-container"></div>
+  </div>
+
+  <!-- Music toggle button (top right, safe-area aware) -->
+  <div class="music-toggle-container">
+    <button id="music-toggle-btn" class="music-toggle-btn" aria-label="Bật hoặc tắt nhạc nền" title="Bật/Tắt nhạc">
+      <span class="music-icon" id="music-icon">🎵</span>
+      <span class="music-wave" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+    <div id="music-tooltip" class="music-tooltip" role="status">Chạm để bật nhạc nhé 🎶</div>
+    <audio id="bg-music" preload="none" loop></audio>
+  </div>
+
+  <!-- Main app container -->
+  <main class="app-container" id="app">
+
+    <!-- ============================================== -->
+    <!-- SCREEN 1: WELCOME SCREEN                       -->
+    <!-- ============================================== -->
+    <section id="screen-welcome" class="screen screen-welcome active" aria-labelledby="welcome-title">
+      <div class="welcome-card card">
+        <div class="moon-avatar-wrap">
+          <div class="moon-glow-ring"></div>
+          <div class="moon-avatar" aria-hidden="true">🌙</div>
+        </div>
+        
+        <h1 id="welcome-title" class="welcome-title">Chào Moon!</h1>
+        
+        <div class="welcome-text">
+          <p>Hôm nay anh chuẩn bị một món quà nho nhỏ dành riêng cho em.</p>
+          <p class="welcome-highlight">Nhưng trước khi mở quà, Moon chơi với anh một trò chơi nhỏ nhé! 💗</p>
+        </div>
+
+        <button id="btn-start-game" class="btn btn-primary btn-pulse" type="button">
+          <span>Bắt đầu khám phá món quà</span>
+          <span class="btn-emoji" aria-hidden="true">💌</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 2: 10-QUESTION QUIZ SCREEN              -->
+    <!-- ============================================== -->
+    <section id="screen-quiz" class="screen screen-quiz" aria-labelledby="quiz-question-title">
+      <div class="quiz-container card">
+        <!-- Progress Bar Header -->
+        <header class="quiz-header">
+          <div class="quiz-progress-meta">
+            <span class="quiz-badge" id="quiz-step-badge">Câu 1/10</span>
+            <span class="quiz-percent" id="quiz-percent">10%</span>
+          </div>
+          <div class="progress-track" role="progressbar" id="quiz-progressbar" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1">
+            <div class="progress-fill" id="quiz-progress-fill"></div>
+          </div>
+        </header>
+
+        <!-- Question Body -->
+        <div class="quiz-body">
+          <div class="question-number-tag" id="q-tag" aria-hidden="true">Câu hỏi 1</div>
+          <h2 id="quiz-question-title" class="quiz-question-title">Nội dung câu hỏi...</h2>
+
+          <!-- Multi-choice Options list -->
+          <div id="quiz-options-container" class="quiz-options" role="radiogroup" aria-labelledby="quiz-question-title">
+            <!-- Dynamically populated via script.js -->
+          </div>
+
+          <!-- Custom "Other" Textbox / Free text for Q10 -->
+          <div id="quiz-custom-input-box" class="quiz-custom-box hidden">
+            <label for="quiz-custom-input" id="quiz-custom-label" class="quiz-custom-label">Câu trả lời của Moon:</label>
+            <div class="input-char-wrap">
+              <textarea id="quiz-custom-input" class="quiz-custom-input" rows="3" maxlength="300" placeholder="Nhập suy nghĩ của Moon ở đây nhé..."></textarea>
+              <div class="char-count"><span id="char-current">0</span>/300</div>
+            </div>
+            <div id="input-error-msg" class="input-error hidden" role="alert">Vui lòng nhập một chút suy nghĩ của em nhé 🌸</div>
+          </div>
+        </div>
+
+        <!-- Quiz Footer Navigation -->
+        <footer class="quiz-nav">
+          <button id="btn-prev-question" class="btn btn-secondary" type="button" disabled>
+            <span class="btn-icon">‹</span>
+            <span>Câu trước</span>
+          </button>
+          
+          <button id="btn-skip-question" class="btn btn-ghost" type="button">
+            <span>Bỏ qua</span>
+          </button>
+
+          <button id="btn-next-question" class="btn btn-primary" type="button">
+            <span>Tiếp tục</span>
+            <span class="btn-icon">›</span>
+          </button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 3: QUIZ SUMMARY SCREEN                  -->
+    <!-- ============================================== -->
+    <section id="screen-summary" class="screen screen-summary" aria-labelledby="summary-title">
+      <div class="summary-card card">
+        <div class="summary-header">
+          <div class="summary-icon" aria-hidden="true">🌸</div>
+          <h2 id="summary-title" class="summary-title">Tổng kết câu trả lời của Moon</h2>
+          <p class="summary-subtitle">Cảm ơn Moon đã chia sẻ những điều dễ thương này ạ :3</p>
+        </div>
+
+        <div class="summary-list" id="summary-list" tabindex="0" role="region" aria-label="Danh sách câu trả lời">
+          <!-- Populated dynamically via script.js -->
+        </div>
+
+        <!-- Dòng thông báo gửi đáp án theo yêu cầu -->
+        <p class="summary-send-notice" id="summary-send-notice">
+          Nhấn "Tiếp tục mở quà" 💌
+        </p>
+
+        <!-- Trạng thái gửi đáp án -->
+        <div id="summary-status-box" class="summary-status-box hidden" role="status"></div>
+
+        <!-- Nút xử lý khi lỗi hoặc chưa cấu hình -->
+        <div id="summary-error-actions" class="summary-error-actions hidden">
+          <button id="btn-retry-send" class="btn btn-primary btn-sm" type="button">
+            <span>Thử gửi lại 🔄</span>
+          </button>
+          <button id="btn-skip-send" class="btn btn-secondary btn-sm" type="button">
+            <span>Bỏ qua & mở quà ✨</span>
+          </button>
+        </div>
+
+        <div class="summary-actions">
+          <button id="btn-review-answers" class="btn btn-secondary" type="button">
+            <span>✏️ Xem lại & sửa</span>
+          </button>
+          <button id="btn-finish-summary" class="btn btn-primary" type="button">
+            <span id="btn-finish-summary-text">Tiếp tục mở quà 🎁</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 4: PHOTO HEART MOSAIC SCREEN (3D)       -->
+    <!-- ============================================== -->
+    <section id="screen-heart" class="screen screen-heart" aria-labelledby="heart-title">
+      <div class="heart-stage-wrap">
+        <div class="heart-header">
+          <div class="mini-tag">Món quà bí mật</div>
+          <h2 id="heart-title" class="heart-title">Trái Tim Ảnh Bé Moon 3D 💖</h2>
+          <div class="heart-photo-count" id="heart-photo-count">Đang tải 123 bức ảnh...</div>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="canvas-container" id="canvas-container">
+          <canvas id="heart-canvas" class="heart-canvas" role="img" aria-label="Trái tim lớn ghép từ nhiều bức ảnh kỷ niệm. Chạm hoặc bấm vào để mở thiệp chúc mừng."></canvas>
+          <div id="canvas-fallback" class="canvas-fallback hidden">
+            <!-- Fallback DOM tiles if WebGL/Canvas not supported -->
+          </div>
+        </div>
+
+        <!-- Touch Prompt with animated finger & pulse -->
+        <div class="heart-prompt-box">
+          <div class="hand-indicator" aria-hidden="true">
+            <span class="finger-emoji">👆</span>
+            <span class="pulse-ring"></span>
+          </div>
+          <p class="heart-prompt-text" id="heart-prompt-text">
+            Moon ơi, chạm vào trái tim để mở món quà cuối cùng nhé 💗
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 6: 20/10 GREETING CARD SCREEN           -->
+    <!-- ============================================== -->
+    <section id="screen-card" class="screen screen-card" aria-labelledby="card-title">
+      <div class="card-wrapper">
+        <article class="greeting-letter card" id="greeting-letter">
+          <div class="letter-stamp" aria-hidden="true">
+            <span>20/10</span>
+            <small>🌸</small>
+          </div>
+
+          <div class="letter-top-deco" aria-hidden="true">❦ ════ •⊰❂⊱• ════ ❦</div>
+
+          <h2 id="card-title" class="letter-title">🌷 Chúc Moon ngày 20/10 thật vui vẻ!</h2>
+
+          <div class="letter-content" id="letter-content">
+            <!-- Injected from config.js -->
+          </div>
+
+          <div class="letter-signature-wrap">
+            <div class="letter-signature" id="letter-signature">— Ahihi:3 —</div>
+            <div class="letter-footer-wish" id="letter-footer-wish">Happy Vietnamese Women's Day • 20.10 ✨</div>
+          </div>
+
+          <div class="letter-bottom-deco" aria-hidden="true">❦ ════ •⊰❂⊱• ════ ❦</div>
+        </article>
+
+        <!-- Final Action Buttons -->
+        <div class="card-action-bar">
+          <button id="btn-replay-heart" class="btn btn-secondary btn-sm" type="button" title="Xem lại trái tim kỷ niệm">
+            <span>💖 Xem lại trái tim</span>
+          </button>
+
+          <button id="btn-share-gift" class="btn btn-secondary btn-sm" type="button" title="Chia sẻ đường link này">
+            <span>🔗 Chia sẻ link</span>
+          </button>
+
+          <button id="btn-restart-game" class="btn btn-ghost btn-sm" type="button" title="Chơi lại từ đầu">
+            <span>🔄 Chơi lại</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification for copies or alerts -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+
+  <!-- Script loads -->
+  <script src="config.js"></script>
+  <script src="assets/photos-manifest.js"></script>
+  <script src="photos.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

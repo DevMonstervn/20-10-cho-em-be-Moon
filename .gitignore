@@ -1,0 +1,18 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+
+# Logs & temp files
+*.log
+npm-debug.log*
+assets/photos/IMG_3325.MOV

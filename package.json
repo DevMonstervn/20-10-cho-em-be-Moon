@@ -1,0 +1,22 @@
+{
+  "name": "moon-2010-gift",
+  "version": "1.0.0",
+  "description": "Website quà tặng 20/10 tương tác dành riêng cho Moon",
+  "main": "script.js",
+  "scripts": {
+    "scan:photos": "node scripts/scan-photos.js",
+    "test": "node test-suite.js"
+  },
+  "keywords": [
+    "gift",
+    "20-10",
+    "canvas",
+    "heart-mosaic"
+  ],
+  "author": "Anh",
+  "license": "ISC",
+  "dependencies": {
+    "heic-convert": "^2.1.0",
+    "sharp": "^0.35.5"
+  }
+}
